@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 
 #include "wreck.h"
 
@@ -51,6 +52,9 @@ WreckData *csv_row_to_wreck(char *line) {
 
         // Data e ora inserimento (skip)
         if (!token) return 0;
+        struct tm tm;
+        if (!strptime(token, "%FT%TZ", &tm)) return 0;
+        wreck->ins_date = mktime(&tm);
         token = next_token;
         next_token = get_next_token(token, WRCK_CSV_SEP);
 
@@ -84,4 +88,5 @@ void show_wreck(WreckData *wreck) {
     printf("%20s: %11.8lf\n", "Longitudine", wreck->longitudine);
     printf("%20s: %11.8lf\n", "Latitudine", wreck->latitudine);
     printf("%20s: <https://www.openstreetmap.org/node/%ju>\n", "OSM link", wreck->osm_id);
+    printf("%20s: %s\n", "Insert date", ctime(&wreck->ins_date));
 }
