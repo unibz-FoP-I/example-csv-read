@@ -6,11 +6,16 @@ override CFLAGS += -g -Wall -Wno-everything -pthread -lm
 SRCS = $(shell find . -name '.ccls-cache' -type d -prune -o -type f -name '*.c' -print)
 HEADERS = $(shell find . -name '.ccls-cache' -type d -prune -o -type f -name '*.h' -print)
 
-main: $(SRCS) $(HEADERS)
-	$(CC) $(CFLAGS) $(SRCS) -o "$@"
+OBJS = $(SRCS:.c=.o)
 
-main-debug: $(SRCS) $(HEADERS)
-	$(CC) $(CFLAGS) -O0 $(SRCS) -o "$@"
+%.o: %.c $(HEADERS)
+	$(CC) $(CFLAGS) -c $< -o "$@"
+
+main: $(OBJS)
+	$(CC) $(CFLAGS) $^ -o "$@"
+
+main-debug: $(OBJS)
+	$(CC) $(CFLAGS) -O0 $^ -o "$@"
 
 clean:
-	rm -f main main-debug
+	rm -f main main-debug $(OBJS)
