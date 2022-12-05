@@ -5,6 +5,7 @@
  * Read and process data on shipwrecks in Italy as described in [Mappa dei relitti in Italia](http://www.datiopen.it/en/opendata/Mappa_dei_relitti_in_Italia)
 */
 
+#include <stdint.h>
 #include <stdlib.h>
 #include <time.h>
 
