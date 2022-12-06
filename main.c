@@ -38,13 +38,13 @@ int show_csv_wrecks(FILE *fp) {
         return EXIT_FAILURE;
     }
 
+    WreckData wreck;
     while (getline(&line, &len, fp) != -1) {
         strncpy(line_buf, line, sizeof(line_buf));
         line_buf[sizeof(line_buf) - 1] = 0;
-        WreckData *wreck = csv_row_to_wreck(line_buf);
-        if (wreck) {
+        if (csv_row_to_wreck(line_buf, &wreck)) {
             puts("------------------------------");
-            show_wreck(wreck);
+            show_wreck(&wreck);
         } else
         {
             fprintf(stderr, "Cannot parse: %s\n", line);

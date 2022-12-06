@@ -14,8 +14,7 @@ static char *get_next_token(char* current, char sep) {
     return 0;
 }
 
-WreckData *csv_row_to_wreck(char *line) {
-    WreckData *wreck = malloc(sizeof(WreckData));
+int csv_row_to_wreck(char *line, WreckData *wreck) {
     if (wreck)
     {
         memset(wreck, 0, sizeof(wreck));
@@ -50,7 +49,7 @@ WreckData *csv_row_to_wreck(char *line) {
         token = next_token;
         next_token = get_next_token(token, WRCK_CSV_SEP);
 
-        // Data e ora inserimento (skip)
+        // Data e ora inserimento
         if (!token) return 0;
         struct tm tm;
         if (!strptime(token, "%FT%TZ", &tm)) return 0;
@@ -75,8 +74,7 @@ WreckData *csv_row_to_wreck(char *line) {
         if (!(wreck->latitudine = strtod(token, NULL))) return 0;
     }
 
-
-    return wreck;
+    return 1;
 }
 
 void show_wreck(WreckData *wreck) {

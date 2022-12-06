@@ -27,7 +27,7 @@ typedef struct
 
 // Prototypes
 
-WreckData *csv_row_to_wreck(char *line);
+int csv_row_to_wreck(char *line, WreckData *wreck);
 void show_wreck(WreckData *wreck);
 
 #endif
