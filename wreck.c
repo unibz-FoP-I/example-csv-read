@@ -17,7 +17,7 @@ static char *get_next_token(char* current, char sep) {
 int csv_row_to_wreck(char *line, WreckData *wreck) {
     if (wreck)
     {
-        memset(wreck, 0, sizeof(wreck));
+        memset(wreck, 0, sizeof(*wreck));
         char *token = line;
         char *next_token = get_next_token(line, WRCK_CSV_SEP);
         // Comune
